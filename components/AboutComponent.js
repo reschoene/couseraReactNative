@@ -17,6 +17,32 @@ function History(){
     );
 }
 
+function Leadership ({leaders}){
+    const renderLeader = ({item, index}) => {
+        return (
+            <ListItem 
+                key={index}
+                title={item.name}
+                subtitle={item.description}
+                hideChevron={true}
+                leftAvatar={{source: require('./images/alberto.png')}}
+                />
+        );
+    }
+
+    return(
+        <Card
+            title='Corporate Leadership'
+        >
+            <FlatList 
+                data={leaders}
+                renderItem={renderLeader}
+                keyExtractor={item => item.id.toString()}
+            />
+        </Card>
+    );
+}
+
 class About extends Component{
     constructor(props){
         super(props);
@@ -30,32 +56,24 @@ class About extends Component{
     }
 
     render(){
-        const renderLeader = ({item, index}) => {
-            return (
-                <ListItem 
-                    key={index}
-                    title={item.name}
-                    subtitle={item.description}
-                    hideChevron={true}
-                    leftAvatar={{source: require('./images/alberto.png')}}
-                    />
-            );
+        const renderAboutItem = ({item, index}) => {
+            if (index == 0){
+                return (
+                    <History />  
+                );
+            }else{
+                return(
+                    <Leadership leaders={this.state.leaders}/>
+                );
+            }
         }
 
         return(
-            <ScrollView>
-                <History />
-
-                <Card
-                    title='Corporate Leadership'
-                >
-                    <FlatList 
-                        data={this.state.leaders}
-                        renderItem={renderLeader}
-                        keyExtractor={item => item.id.toString()}
-                    />
-                </Card>
-            </ScrollView>
+            <FlatList
+                data={[{id:0}, {id:1}]}
+                renderItem={renderAboutItem}
+                keyExtractor={item => item.id.toString()}
+            />
         );
     }
 }
