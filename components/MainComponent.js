@@ -7,12 +7,22 @@ import Dishdetail from './DishDetailComponent';
 import {View, Platform, Image, StyleSheet, ScrollView, Text} from 'react-native';
 import {createStackNavigator, createDrawerNavigator, DrawerItems, SafeAreaView} from 'react-navigation';
 import {Icon} from 'react-native-elements';
+import {connect} from 'react-redux';
+import {fetchDishes, fetchComments, fetchPromos, fetchLeaders} from '../redux/ActionCreators';
+
+const mapDispatchToProps = dispatch => ({
+    fetchDishes: () => dispatch(fetchDishes()),
+    fetchComments: () => dispatch(fetchComments()),
+    fetchLeaders: () => dispatch(fetchLeaders()),
+    fetchPromos: () => dispatch(fetchPromos()),
+});
 
 const MenuNavigator = createStackNavigator({
     Menu: {screen: Menu, 
            navigationOptions: ({navigation}) => ({
-               headerLeft: <Icon name='menu' size={24} style={{marginLeft: 10}}
-                            color='white' onPress={() => navigation.toggleDrawer()} />
+               headerLeft: <View style={{marginLeft: 10}}>
+                                <Icon name='menu' size={24} color='white' onPress={() => navigation.toggleDrawer()} />
+                            </View>
            })},
     Dishdetail: {screen: Dishdetail}
 }, {
@@ -39,8 +49,9 @@ const HomeNavigator = createStackNavigator({
         headerTitleStyle: {
             color: '#fff'
         },
-        headerLeft: <Icon name='menu' size={24} style={{marginLeft: 10}}
-                          color='white' onPress={() => navigation.toggleDrawer()} />        
+        headerLeft: <View style={{marginLeft: 10}}>
+                        <Icon name='menu' size={24} color='white' onPress={() => navigation.toggleDrawer()} />
+                    </View>
     })
 });
 
@@ -55,8 +66,9 @@ const ContactNavigator = createStackNavigator({
         headerTitleStyle: {
             color: '#fff'
         },
-        headerLeft: <Icon name='menu' size={24} style={{marginLeft: 10}}
-                    color='white' onPress={() => navigation.toggleDrawer()} />        
+        headerLeft: <View style={{marginLeft: 10}}>
+                        <Icon name='menu' size={24} color='white' onPress={() => navigation.toggleDrawer()} />
+                    </View>
     })
 });
 
@@ -71,8 +83,9 @@ const AboutNavigator = createStackNavigator({
         headerTitleStyle: {
             color: '#fff'
         },
-        headerLeft: <Icon name='menu' size={24} style={{marginLeft: 10}}
-                     color='white' onPress={() => navigation.toggleDrawer()} />        
+        headerLeft: <View style={{marginLeft: 10}}>
+                        <Icon name='menu' size={24} color='white' onPress={() => navigation.toggleDrawer()} />
+                    </View>
     })
 });
 
@@ -152,6 +165,13 @@ const MainNavigator = createDrawerNavigator({
 })
 
 class Main extends Component{
+    componentDidMount(){
+        this.props.fetchDishes();
+        this.props.fetchComments();
+        this.props.fetchPromos();
+        this.props.fetchLeaders();
+    }
+
     render(){
         return(
             <View style={{flex: 1, paddingTop: Platform.OS === 'ios' ? 0 : Expo.Constants.statusBarHeight}}>
@@ -185,4 +205,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Main;
+export default connect(null, mapDispatchToProps)(Main);

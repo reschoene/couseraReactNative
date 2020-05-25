@@ -103,7 +103,7 @@ export const addLeaders = (leaders) => ({
     payload: leaders
 });
 
-export const fetchPromotions = () => (dispatch) => {
+export const fetchPromos = () => (dispatch) => {
     dispatch(promosLoading());
 
     return fetch(baseUrl + 'promotions')
