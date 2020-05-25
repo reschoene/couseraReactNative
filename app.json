@@ -22,7 +22,9 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "br.com.reschoene",
+      "buildNumber": "1.0.0"      
     }
   }
 }
